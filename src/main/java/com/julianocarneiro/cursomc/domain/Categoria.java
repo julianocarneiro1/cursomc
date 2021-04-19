@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity // Indica ser uma entidade do JPA
 // Serializable significa que os objetos dessa Classe poderão ser convertidos para uma sequencia de bytes (p/ gravação em arquivos, tráfego em rede, procedimento padrão)
 public class Categoria implements Serializable {
@@ -22,6 +24,7 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	@JsonManagedReference
 	@ManyToMany(mappedBy="categorias") //mapeamento já feito na classe Produto
 	private List<Produto> produtos = new ArrayList<>();
 
