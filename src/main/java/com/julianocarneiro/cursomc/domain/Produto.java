@@ -8,35 +8,39 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-@Entity // Indica ser uma entidade do JPA
-// Serializable significa que os objetos dessa Classe poderão ser convertidos para uma sequencia de bytes (p/ gravação em arquivos, tráfego em rede, procedimento padrão)
-public class Categoria implements Serializable {
-	
+@Entity
+public class Produto implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY) // definindo estratégia de geração automática dos ids das categorias
-	// por padrão, todos os atributos são privados, porém pode-se criar os Getters and Setters
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Double preco;
 	
-	@ManyToMany(mappedBy="categorias") //mapeamento já feito na classe Produto
-	private List<Produto> produtos = new ArrayList<>();
-
-	// contrutor vazio para instanciar objetos sem jogar nada para os atributos
-	public Categoria() {
+	// mapeamento da lista de categorias, passando informações da tabela intermediária entre muitos p/ muitos (categoria / produto)
+	@ManyToMany
+	@JoinTable(name = "PRODUTO_CATEGORIA",
+		joinColumns = @JoinColumn(name = "produto_id"),
+		inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	)
+	private List<Categoria> categorias = new ArrayList<>();
+	
+	public Produto() {
 	}
 
-	// construtor com atributos
-	public Categoria(Integer id, String nome) {
+	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
 
-	//Getters and Setters
 	public Integer getId() {
 		return id;
 	}
@@ -52,16 +56,23 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public List<Produto> getProdutos() {
-		return produtos;
+
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
-	
-	//criação dos hashCode equals
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,7 +89,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -86,8 +97,6 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 	
 	
 	
