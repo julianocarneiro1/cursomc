@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.julianocarneiro.cursomc.domain.Categoria;
-import com.julianocarneiro.cursomc.services.CategoriaService;
+import com.julianocarneiro.cursomc.domain.Cliente;
+import com.julianocarneiro.cursomc.services.ClienteService;
 
 
 //Criando classe que será um controlador REST e responderá pelo endpoint "/categorias"
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResource {
+@RequestMapping(value="/clientes")
+public class ClienteResource {
 	
 	@Autowired //Controlador REST acessa camada de Serviço
-	private CategoriaService service;
+	private ClienteService service;
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
-		Categoria obj = service.buscar(id);
+		Cliente obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 		
 	}
