@@ -1,6 +1,8 @@
 package com.julianocarneiro.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.julianocarneiro.cursomc.domain.Categoria;
+import com.julianocarneiro.cursomc.dto.CategoriaDTO;
 import com.julianocarneiro.cursomc.services.CategoriaService;
 
 
@@ -24,11 +27,9 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
-		
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {		
 		Categoria obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
-		
+		return ResponseEntity.ok().body(obj);		
 	}
 	
 	// método para receber categoria no formato Json e inserir no BD
@@ -53,6 +54,14 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	// retornando categorias para serem listadas no GET, convertidas em DTO
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {		
+		List<Categoria> list = service.findAll();
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);		
 	}
 	
 }

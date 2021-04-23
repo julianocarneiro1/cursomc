@@ -10,34 +10,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-@Entity // Indica ser uma entidade do JPA
-// Serializable significa que os objetos dessa Classe poderão ser convertidos para uma sequencia de bytes (p/ gravação em arquivos, tráfego em rede, procedimento padrão)
+@Entity
 public class Categoria implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY) // definindo estratégia de geração automática dos ids das categorias
-	// por padrão, todos os atributos são privados, porém pode-se criar os Getters and Setters
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	
-	@ManyToMany(mappedBy="categorias") //mapeamento já feito na classe Produto
+	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 
-	// contrutor vazio para instanciar objetos sem jogar nada para os atributos
 	public Categoria() {
 	}
 
-	// construtor com atributos
 	public Categoria(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 
-	//Getters and Setters
 	public Integer getId() {
 		return id;
 	}
@@ -62,7 +56,6 @@ public class Categoria implements Serializable {
 		this.produtos = produtos;
 	}
 	
-	//criação dos hashCode equals
 	@Override
 	public int hashCode() {
 		final int prime = 31;
