@@ -16,7 +16,7 @@ public class ClienteService {
 	private ClienteRepository repo; //Serviço acessa camada de acesso a dados (Repository)
 	
 	//operação capaz de buscar categoria por código (recebe id Integer como parâmetro)
-	public Cliente buscar(Integer id) {
+	public Cliente find(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 		"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

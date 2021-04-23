@@ -12,19 +12,24 @@ import com.julianocarneiro.cursomc.services.exceptions.ObjectNotFoundException;
 @Service
 public class CategoriaService {
 	
-	@Autowired //instancia a dependencia declarada abaixo
-	private CategoriaRepository repo; //Serviço acessa camada de acesso a dados (Repository)
+	@Autowired // instancia a dependencia declarada abaixo
+	private CategoriaRepository repo;
 	
-	//operação capaz de buscar categoria por código (recebe id Integer como parâmetro)
-	public Categoria buscar(Integer id) {
+	// operação capaz de buscar categoria por código
+	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 		"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
-	//metodo que será chamado pelo CategoriaResource
+	// metodos CRUD que serão chamados pelo CategoriaResource
 	public Categoria insert(Categoria obj) {
-		obj.setId(null); //deve ser um id nulo para inserir e não modificar
+		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	public Categoria update(Categoria obj) {
+		find(obj.getId()); // reaproveitando método para ver se id existe
 		return repo.save(obj);
 	}
 
