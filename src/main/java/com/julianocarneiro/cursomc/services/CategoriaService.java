@@ -22,5 +22,10 @@ public class CategoriaService {
 		"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
+	//metodo que será chamado pelo CategoriaResource
+	public Categoria insert(Categoria obj) {
+		obj.setId(null); //deve ser um id nulo para inserir e não modificar
+		return repo.save(obj);
+	}
 
 }
