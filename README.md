@@ -1,5 +1,5 @@
 <h4> 
-	🚧  Projeto em construção...  🚧
+	🚧  Projeto em construção...
 </h4>
 
 <br>
