@@ -1,14 +1,18 @@
 package com.julianocarneiro.cursomc.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.julianocarneiro.cursomc.domain.Cliente;
 import com.julianocarneiro.cursomc.domain.Pedido;
 
 @Repository
-// Classe responsável por acessar o BD e fazer as consultas da tabela Pedido
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
-	
+	@Transactional(readOnly=true)
+	Page<Pedido> findByCliente(Cliente cliente, Pageable pageRequest);
 	
 }
