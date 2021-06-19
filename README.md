@@ -1,7 +1,3 @@
-<h4> 
-	🚧  Projeto em construção...
-</h4>
-
 <br>
 
 💻 Tecnologias
